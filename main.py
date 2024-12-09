@@ -1,6 +1,10 @@
 import pyb
 import lcd160cr
 lcd = lcd160cr.LCD160CR('X')
+from pyb import Timer
+
+timer_4 = Timer(4)
+timer_4.init(freq=2)
 
 WIDTH = 160
 HEIGHT = 128
@@ -16,6 +20,7 @@ lcd.set_orient(lcd160cr.LANDSCAPE)
 
 direction_pin = pyb.Pin('Y1', pyb.Pin.OUT_PP)
 pulse_pin = pyb.Pin('Y2', pyb.Pin.OUT_PP)
+test_pin = pyb.Pin('Y3', pyb.Pin.OUT_PP)
 
 PULSE_DELAY = 1
 
@@ -60,7 +65,22 @@ def detect_touch():
 
         pyb.delay(100)
 
+def pulse(pulse_object, pulse_count):
+    pulse_object.toggle()
+    
+    
+class Pulse:
+    def __init__(self, pin):
+        self.state = False
+        self.pin = pin
+
+    def toggle(self):
+        if self.state:
+            self.pin.low()
+        else:
+            self.pin.high()
+        self.state = not self.state
+
+pulse_object = Pulse(test_pin)
+timer_4.callback(lambda t: pulse_object.toggle())
 detect_touch()
-
-
-
