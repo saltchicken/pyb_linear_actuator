@@ -4,7 +4,7 @@ lcd = lcd160cr.LCD160CR('X')
 from pyb import Timer
 
 timer_4 = Timer(4)
-timer_4.init(freq=1000)
+timer_4.init(freq=10000)
 
 WIDTH = 160
 HEIGHT = 128
@@ -60,6 +60,7 @@ def detect_touch():
                     # run_motor(1, 1000)
                 else:
                     timer_4.callback(lambda t: pulse_object.toggle(timer_4, 0))
+                    # run_motor(0, 1000)
             else:
                 pass
                 # run_motor(0, 1000)
