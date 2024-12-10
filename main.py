@@ -107,5 +107,5 @@ class Pulse:
 
         
 
-pulse_object = Pulse(pulse_pin, 1000)
+pulse_object = Pulse(pulse_pin, 6400 * 2)
 detect_touch()
